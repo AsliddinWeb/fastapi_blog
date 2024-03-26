@@ -9,11 +9,11 @@ def get_all(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
 
-def create(blog: schemas.Blog, db: Session = Depends(get_db)):
+def create(blog: schemas.Blog, current_user: schemas.UserID, db: Session = Depends(get_db)):
     new_blog = models.Blog(
         title=blog.title,
         body=blog.body,
-        user_id=1
+        user_id=current_user
     )
 
     db.add(new_blog)

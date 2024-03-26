@@ -20,3 +20,7 @@ def create_user(user: schemas.User, db: Session = Depends(get_db)):
 def get_user(id: int, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
     return user_view.get_user(id, db)
 
+@router.get('/{email}', response_model=schemas.ShowUserBlogs)
+def get_user_by_email(email: str, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    return user_view.get_user_by_email(email, db)
+

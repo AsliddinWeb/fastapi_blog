@@ -6,6 +6,9 @@ from .. import schemas, database, models, hashing
 get_db = database.get_db
 
 def create_user(user: schemas.User, db: Session = Depends(get_db)):
+    get_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if get_user:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"{get_user.email} li user mavjud!")
     new_user = models.User(
         name=user.name,
         email=user.email,

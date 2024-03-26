@@ -20,6 +20,6 @@ def login(request: OAuth2PasswordRequestForm = Depends( ), db: Session = Depends
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Parol noto'g'ri")
 
     access_token = token.create_access_token(
-        data={"sub": user.email}
+        data={"sub": user.email, "user_id": user.id}
     )
     return schemas.Token(access_token=access_token, token_type="bearer")
